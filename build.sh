@@ -16,15 +16,13 @@ mkdir sources
 tar -xzf limine.tar.gz -C sources --strip-components 1
 
 (
-	export cc=$(which clang)
-
 	cd sources || exit 255
 
 	# Generate the configure script
 	./bootstrap || exit 255
 	mkdir build
 	cd build || exit 255
-	../configure
+	../configure --enable-uefi-x86-64 --enable-uefi-aarch64 || exit 254
 	make -j "$(nproc)"
 	# Copy the built files to /out directory
 	tar -cvzf /out/limine.tar.gz .
